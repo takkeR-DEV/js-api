@@ -26,7 +26,6 @@ input.addEventListener("input", async () => {
         let { owner, name, stargazers_count: stars } = el;
         txt.addEventListener("click", () => {
           createRepo(name, owner.login, stars);
-          resultsContainer.style.display = "none";
         });
       }
     })
@@ -34,9 +33,7 @@ input.addEventListener("input", async () => {
       if (e.name === "AbortError") {
         alert(`я отменяю запрос на сервер`);
       } else {
-        alert(
-          "Windows заблокировал оптравьте по этому номеру 1000р для разблокоривки 89195432995"
-        );
+        alert("Ошибка API");
       }
     });
 });
