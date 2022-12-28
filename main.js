@@ -24,7 +24,8 @@ input.addEventListener("input", async () => {
       for (el of res) {
         let txt = createTxt(el.name);
         let { owner, name, stargazers_count: stars } = el;
-        txt.addEventListener("click", () => {
+        txt.addEventListener("click", function () {
+          txt.removeEventListener("click", arguments.callee);
           createRepo(name, owner.login, stars);
           removeTxt();
         });
