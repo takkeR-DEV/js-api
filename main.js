@@ -1,7 +1,7 @@
-let input = document.querySelector(".wrapper__search");
-let state = document.querySelector(".wrapper__status");
-let resultsContainer = document.querySelector(".wrapper__results");
-let reposContainer = document.querySelector(".wrapper__repos");
+const input = document.querySelector(".wrapper__search");
+const state = document.querySelector(".wrapper__status");
+const resultsContainer = document.querySelector(".wrapper__results");
+const reposContainer = document.querySelector(".wrapper__repos");
 const debRep = debounce(getRepos, 500);
 let controller;
 let signal;
@@ -21,17 +21,7 @@ input.addEventListener("input", async () => {
           : `Репозиторий не найден!`
       }`;
       removeTxt();
-      for (el of res) {
-        let txt = createTxt(el.name);
-        let { owner, name, stargazers_count: stars } = el;
-        txt.addEventListener("click", function () {
-          txt.removeEventListener("click", arguments.callee);
-          createRepo(name, owner.login, stars);
-          removeTxt();
-          input.value = "";
-          state.textContent = "";
-        });
-      }
+      listener(res);
     })
     .catch((e) => {
       if (e.name === "AbortError") {
@@ -43,7 +33,7 @@ input.addEventListener("input", async () => {
 });
 
 async function getRepos(name) {
-  let repos = await fetch(
+  const repos = await fetch(
     `https://api.github.com/search/repositories?q=${name}&per_page=5`,
     { signal }
   );
@@ -62,15 +52,15 @@ function createTxt(text) {
 
 function removeTxt() {
   const cards = document.querySelectorAll(".results__txt");
-  for (el of cards) {
+  for (let el of cards) {
     el.remove();
   }
 }
 
 function createRepo(name, owner, stars) {
-  let block = document.createElement("div");
-  let content = document.createElement("div");
-  let button = document.createElement("button");
+  const block = document.createElement("div");
+  const content = document.createElement("div");
+  const button = document.createElement("button");
   content.textContent = `Name: ${name} 
   Owner: ${owner} 
   Stars: ${stars}`;
@@ -84,6 +74,20 @@ function createRepo(name, owner, stars) {
     button.removeEventListener("click", arguments.callee);
     block.remove();
   });
+}
+
+function listener() {
+  for (let el of res) {
+    const txt = createTxt(el.name);
+    const { owner, name, stargazers_count: stars } = el;
+    txt.addEventListener("click", function () {
+      txt.removeEventListener("click", arguments.callee);
+      createRepo(name, owner.login, stars);
+      removeTxt();
+      input.value = "";
+      state.textContent = "";
+    });
+  }
 }
 /// Debouce
 function debounce(fn, ms) {
