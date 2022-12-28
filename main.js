@@ -29,6 +29,7 @@ input.addEventListener("input", async () => {
           createRepo(name, owner.login, stars);
           removeTxt();
           input.value = "";
+          state.textContent = "";
         });
       }
     })
