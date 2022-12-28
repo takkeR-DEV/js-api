@@ -28,6 +28,7 @@ input.addEventListener("input", async () => {
           txt.removeEventListener("click", arguments.callee);
           createRepo(name, owner.login, stars);
           removeTxt();
+          input.value = "";
         });
       }
     })
