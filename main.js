@@ -37,13 +37,13 @@ async function getRepos(name) {
     `https://api.github.com/search/repositories?q=${name}&per_page=5`,
     { signal }
   );
-  let response = await repos.json();
+  const response = await repos.json();
   return response["items"];
 }
 
 /// Создание предложения для выбора
 function createTxt(text) {
-  let txtcont = document.createElement("div");
+  const txtcont = document.createElement("div");
   txtcont.textContent = text;
   txtcont.classList.add("results__txt");
   resultsContainer.appendChild(txtcont);
