@@ -37,13 +37,13 @@ async function getRepos(name) {
     `https://api.github.com/search/repositories?q=${name}&per_page=5`,
     { signal }
   );
-  const response = await repos.json();
+  let response = await repos.json();
   return response["items"];
 }
 
 /// Создание предложения для выбора
 function createTxt(text) {
-  const txtcont = document.createElement("div");
+  let txtcont = document.createElement("div");
   txtcont.textContent = text;
   txtcont.classList.add("results__txt");
   resultsContainer.appendChild(txtcont);
@@ -76,7 +76,7 @@ function createRepo(name, owner, stars) {
   });
 }
 
-function listener() {
+function listener(res) {
   for (let el of res) {
     const txt = createTxt(el.name);
     const { owner, name, stargazers_count: stars } = el;
